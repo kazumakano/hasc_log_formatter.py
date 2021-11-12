@@ -29,9 +29,9 @@ def _load(src_file: str) -> np.ndarray:
     return data
 
 def _resample(data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-    begin_ts_list = [d[0, 0] for d in data]
-    end_ts_list = [d[-1, 0] for d in data]
-    resampled_ts: np.ndarray = np.arange(max(begin_ts_list), min(end_ts_list), step=1/FREQ)
+    start = max([d[0, 0] for d in data])
+    stop = min([d[-1, 0] for d in data])
+    resampled_ts: np.ndarray = np.arange(start, stop, step=1/FREQ, dtype=np.float64)
 
     resampled_val = np.empty((len(resampled_ts), 3 * len(SENSOR_LIST)), np.float64)
     for i, d in enumerate(data):
@@ -41,7 +41,7 @@ def _resample(data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     return resampled_ts, resampled_val
 
 def _convert_from_unix_to_datetime(ts: np.ndarray) -> np.ndarray:
-    ts = ts.astype(object)
+    ts = ts.astype(object)    # enable to store datetime
 
     for i, t in enumerate(ts):
         ts[i] = datetime.fromtimestamp(t)
