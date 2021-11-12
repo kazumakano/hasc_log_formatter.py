@@ -11,7 +11,7 @@ FREQ = 100
 ROOT_DIR = path.dirname(__file__) + "/../"
 SENSOR_LIST = ("ACC", "GYRO")
 
-def _load(src_file: str) -> np.ndarray:
+def _load_log(src_file: str) -> np.ndarray:
     data = np.empty(len(SENSOR_LIST), dtype=np.ndarray)
     for i in range(len(SENSOR_LIST)):
         data[i] = np.empty((0, 4), dtype=np.float64)
@@ -23,12 +23,12 @@ def _load(src_file: str) -> np.ndarray:
                 if row[1] == s:
                     row_2 = row[2].split(",")[1:]
                     data[i] = np.vstack((data[i], (np.float64(row[0]), np.float64(row_2[0]), np.float64(row_2[1]), np.float64(row_2[2]))))
-    
+
     print(f"{path.basename(src_file)} has been loaded")
 
     return data
 
-def _resample(data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+def _resample_log(data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     start = max([d[0, 0] for d in data])
     stop = min([d[-1, 0] for d in data])
     resampled_ts: np.ndarray = np.arange(start, stop, step=1/FREQ, dtype=np.float64)
@@ -45,11 +45,11 @@ def _convert_from_unix_to_datetime(ts: np.ndarray) -> np.ndarray:
 
     for i, t in enumerate(ts):
         ts[i] = datetime.fromtimestamp(t)
-    
+
     return ts
 
 def _format_log(src_file: str, tgt_dir: str) -> None:
-    resampled_ts, resampled_val = _resample(_load(src_file))
+    resampled_ts, resampled_val = _resample_log(_load_log(src_file))
     resampled_ts = _convert_from_unix_to_datetime(resampled_ts)
 
     tgt_file = tgt_dir + str(resampled_ts[0].date()) + "_" + path.basename(src_file)[:-4] + ".csv"
