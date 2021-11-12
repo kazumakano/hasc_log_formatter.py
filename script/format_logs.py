@@ -36,7 +36,7 @@ def _resample_log(data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     resampled_val = np.empty((len(resampled_ts), 3 * len(SENSOR_LIST)), np.float64)
     for i, d in enumerate(data):
         for j in range(3):
-            resampled_val[:, 3 * i + j] = interp1d(d[:, 0], d[:, j+1])(resampled_ts)
+            resampled_val[:, 3*i+j] = interp1d(d[:, 0], d[:, j+1])(resampled_ts)
 
     return resampled_ts, resampled_val
 
