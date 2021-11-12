@@ -56,7 +56,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     with open(tgt_file, "w") as f:
         writer = csv.writer(f)
         writer.writerows(np.hstack((resampled_ts[:, np.newaxis], resampled_val)))
-    
+
     print(f"written to {path.basename(tgt_file)}")
 
 def format_logs(src_file: Union[str, None] = None, src_dir: Union[str, None] = None, tgt_dir: Union[str, None] = None) -> None:
