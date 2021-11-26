@@ -1,0 +1,2 @@
+freq: 100
+sensor: ["ACC", "GYRO", "BLE"]
