@@ -3,6 +3,7 @@ import csv
 import os.path as path
 from datetime import datetime
 from glob import iglob
+from os import makedirs
 from typing import Tuple, Union
 import numpy as np
 import yaml
@@ -41,8 +42,7 @@ def _load_log(src_file: str) -> Tuple[np.ndarray, np.ndarray]:
                     inertial[i] = np.vstack((inertial[i], (np.float64(row[0]), np.float64(row_2[0]), np.float64(row_2[1]), np.float64(row_2[2]))))
 
             if ENABLE_BLE and row[1] == "BLE":
-                # row_2 = row[2].split(",")
-                row_2 = row[3].split(",")
+                row_2 = row[2].split(",")
                 ble[0] = np.hstack((ble[0], np.float64(row[0])))
                 ble[1] = np.hstack((ble[1], row_2[0].lower()))
                 ble[2] = np.hstack((ble[2], np.int8(row_2[1])))
@@ -77,6 +77,8 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     resampled_ts, resampled_val = _resample_inertial_log(inertial)
     resampled_ts = _convert_from_unix_to_datetime(resampled_ts)
 
+    if not path.exists(path.join(tgt_dir, "inertial/")):
+        makedirs(path.join(tgt_dir, "inertial/"))
     tgt_file = path.join(tgt_dir, "inertial/", str(resampled_ts[0].date()) + "_" + path.basename(src_file)[:-4] + ".csv")
     with open(tgt_file, "w") as f:
         writer = csv.writer(f)
@@ -87,6 +89,8 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     if ENABLE_BLE:
         ble[0] = _convert_from_unix_to_datetime(ble[0])
 
+        if not path.exists(path.join(tgt_dir, "ble/")):
+            makedirs(path.join(tgt_dir, "ble/"))
         tgt_file = path.join(tgt_dir, "ble/", str(ble[0][0].date()) + ".csv")
         with open(tgt_file, "w") as f:
             writer = csv.writer(f)
