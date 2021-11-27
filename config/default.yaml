@@ -1,2 +1,3 @@
+inertial_sensor: [ACC, GYRO]
+enable_ble: True
 freq: 100
-sensor: ["ACC", "GYRO", "BLE"]
