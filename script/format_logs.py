@@ -52,8 +52,8 @@ def _load_log(src_file: str) -> Tuple[np.ndarray, np.ndarray]:
     return inertial, ble
 
 def _resample_inertial_log(data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-    start = max([d[0, 0] for d in data])
-    stop = min([d[-1, 0] for d in data])
+    start: np.float64 = max([d[0, 0] for d in data])
+    stop: np.float64 = min([d[-1, 0] for d in data])
     resampled_ts: np.ndarray = np.arange(start, stop, step=1/FREQ, dtype=np.float64)
 
     resampled_val = np.empty((len(resampled_ts), 3 * len(INERTIAL_SENSOR_LIST)), np.float64)
