@@ -82,7 +82,8 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     tgt_file = path.join(tgt_dir, "inertial/", str(resampled_ts[0].date()) + "_" + path.basename(src_file)[:-4] + ".csv")
     with open(tgt_file, "w") as f:
         writer = csv.writer(f)
-        writer.writerows(np.hstack((resampled_ts[:, np.newaxis], resampled_val)))
+        for i, t in enumerate(resampled_ts):
+            writer.writerow((t.strftime("%Y-%m-%d %H:%M:%S.%f"), *resampled_val[i]))
 
     print(f"written to inertial/{path.basename(tgt_file)}")
 
@@ -95,7 +96,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
         with open(tgt_file, "w") as f:
             writer = csv.writer(f)
             for i, t in enumerate(ble[0]):
-                writer.writerow((t, ble[1][i], ble[2][i]))
+                writer.writerow((t.strftime("%Y-%m-%d %H:%M:%S.%f"), ble[1][i], ble[2][i]))
 
         print(f"written to ble/{path.basename(tgt_file)}")
 
