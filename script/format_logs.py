@@ -19,9 +19,9 @@ def _set_params(conf_file: Union[str, None] = None) -> None:
 
     with open(conf_file) as f:
         conf: dict = yaml.safe_load(f)
-    INERTIAL_SENSORS = np.array(conf["inertial_sensor"], dtype=str)
     ENABLE_BLE = bool(conf["enable_ble"])
     FREQ = np.float16(conf["freq"])
+    INERTIAL_SENSORS = np.array(conf["inertial_sensors"], dtype=str)
 
 def _load_log(src_file: str) -> tuple[np.ndarray, np.ndarray]:
     inertial = np.empty(len(INERTIAL_SENSORS), dtype=np.ndarray)
