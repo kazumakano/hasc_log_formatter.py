@@ -1,4 +1,5 @@
-config/
+config/*
+!config/README.md
 formatted/ble/
 formatted/inertial/
 raw/
