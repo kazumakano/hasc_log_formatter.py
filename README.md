@@ -1,5 +1,5 @@
 # hasc_log_formatter.py
-This is Python module to resample frequency and convert logs format from LOG exported by [HASC Logger](https://github.com/UCLabNU/HASC_Logger_Android) to CSV able to be interpreted by [particle_filter.py](https://github.com/kazumakano/particle_filter.py) and [pdr.py](https://github.com/kazumakano/pdr.py).
+This is Python module to resample frequency and convert logs format from LOG exported by [HASC Logger](https://github.com/UCLabNU/HASC_Logger_Android) to CSV able to be interpreted by [particle_filter.py](https://github.com/kazumakano/particle_filter.py) and [simple_pdr.py](https://github.com/kazumakano/simple_pdr.py).
 
 # Usage
 You can run this formatter as following.
