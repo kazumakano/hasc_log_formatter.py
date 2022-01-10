@@ -3,7 +3,7 @@ import os.path as path
 from datetime import datetime
 from glob import iglob
 from os import makedirs
-from typing import Union
+from typing import Any, Union
 import numpy as np
 import yaml
 from scipy.interpolate import interp1d
@@ -18,7 +18,7 @@ def _set_params(conf_file: Union[str, None] = None) -> None:
         conf_file = path.join(ROOT_DIR, "config/default.yaml")    # load default config file
 
     with open(conf_file) as f:
-        conf: dict = yaml.safe_load(f)
+        conf: dict[str, Any] = yaml.safe_load(f)
     ENABLE_BLE = bool(conf["enable_ble"])
     FREQ = np.float16(conf["freq"])
     INERTIAL_SENSORS = np.array(conf["inertial_sensors"], dtype=str)
