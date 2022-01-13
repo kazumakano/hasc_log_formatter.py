@@ -7,4 +7,4 @@ Config file must contain following parameters:
 | ---              | ---                             | ---         |
 | enable_ble       | format ble logs or not          | `bool`      |
 | freq             | frequency of inertial logs [Hz] | `float`     |
-| inertial_sensors | list of sensor tags             | `list[str]` |
+| inertial_sensors | list of inertial sensor tags    | `list[str]` |
