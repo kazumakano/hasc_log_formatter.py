@@ -1,5 +1,6 @@
 import csv
 import os.path as path
+import pickle
 from datetime import datetime
 from glob import iglob
 from os import makedirs
@@ -74,6 +75,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     resampled_ts, resampled_val = _resample_inertial_log(inertial)
     resampled_ts = _convert_from_unix_to_datetime(resampled_ts)
 
+    # inertial
     dir = path.join(tgt_dir, "inertial/")
     if not path.exists(dir):
         makedirs(dir)
@@ -86,6 +88,13 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
 
     print(f"written to inertial/{path.basename(tgt_file)}")
 
+    tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_inertial.pkl")
+    with open(tgt_file, "wb") as f:
+        pickle.dump((resampled_ts, resampled_val), f)
+    
+    print(f"written to inertial/{path.basename(tgt_file)}")
+
+    # ble
     if ENABLE_BLE:
         ble[0] = _convert_from_unix_to_datetime(ble[0])
 
