@@ -24,7 +24,7 @@ def _set_params(conf_file: Union[str, None] = None) -> None:
     FREQ = np.float16(conf["freq"])
     INERTIAL_SENSORS = tuple(conf["inertial_sensors"])
 
-def _load_log(src_file: str) -> tuple[np.ndarray, np.ndarray]:
+def _load_log(file: str) -> tuple[np.ndarray, np.ndarray]:
     inertial = np.empty(len(INERTIAL_SENSORS), dtype=np.ndarray)
     for i in range(len(INERTIAL_SENSORS)):
         inertial[i] = np.empty((0, 4), dtype=np.float64)    # (timestamp, x, y, z)
@@ -33,7 +33,7 @@ def _load_log(src_file: str) -> tuple[np.ndarray, np.ndarray]:
     ble[1] = np.empty(0, dtype=str)           # MAC address
     ble[2] = np.empty(0, dtype=np.int8)       # RSSI (>= -128)
 
-    with open(src_file) as f:
+    with open(file) as f:
         reader = csv.reader(f, delimiter="\t")
         for row in reader:
             for i, s in enumerate(INERTIAL_SENSORS):
@@ -47,7 +47,7 @@ def _load_log(src_file: str) -> tuple[np.ndarray, np.ndarray]:
                 ble[1] = np.hstack((ble[1], row_2[0].lower()))
                 ble[2] = np.hstack((ble[2], np.int8(row_2[1])))
 
-    print(f"{path.basename(src_file)} has been loaded")
+    print(f"{path.basename(file)} has been loaded")
 
     return inertial, ble
 
