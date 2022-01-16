@@ -80,7 +80,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     if not path.exists(dir):
         makedirs(dir)
     tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_inertial.csv")
-    with open(tgt_file, "w") as f:
+    with open(tgt_file, mode="w") as f:
         writer = csv.writer(f)
         for i, t in enumerate(resampled_ts):
             t: datetime
@@ -89,7 +89,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     print(f"written to inertial/{path.basename(tgt_file)}")
 
     tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_inertial.pkl")
-    with open(tgt_file, "wb") as f:
+    with open(tgt_file, mode="wb") as f:
         pickle.dump((resampled_ts, resampled_val), f)
     
     print(f"written to inertial/{path.basename(tgt_file)}")
@@ -102,7 +102,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
         if not path.exists(dir):
             makedirs(dir)
         tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_ble.csv")
-        with open(tgt_file, "w") as f:
+        with open(tgt_file, mode="w") as f:
             writer = csv.writer(f)
             for i, t in enumerate(ble[0]):
                 t: datetime
