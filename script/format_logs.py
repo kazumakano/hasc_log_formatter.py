@@ -81,7 +81,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     if not path.exists(dir):
         makedirs(dir)
     tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_inertial.csv")
-    with open(tgt_file, mode="w") as f:
+    with open(tgt_file, mode="w", newline="") as f:
         writer = csv.writer(f)
         t: datetime
         for i, t in enumerate(resampled_ts):
@@ -103,7 +103,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
         if not path.exists(dir):
             makedirs(dir)
         tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_ble.csv")
-        with open(tgt_file, mode="w") as f:
+        with open(tgt_file, mode="w", newline="") as f:
             writer = csv.writer(f)
             t: datetime
             for i, t in enumerate(ble[0]):
