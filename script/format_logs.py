@@ -17,6 +17,7 @@ def _set_params(conf_file: Union[str, None] = None) -> None:
 
     if conf_file is None:
         conf_file = path.join(ROOT_DIR, "config/default.yaml")    # load default config file
+    print(f"{path.basename(conf_file)} has been loaded")
 
     with open(conf_file) as f:
         conf: dict[str, Any] = yaml.safe_load(f)
