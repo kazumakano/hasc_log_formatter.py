@@ -82,8 +82,8 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_inertial.csv")
     with open(tgt_file, mode="w") as f:
         writer = csv.writer(f)
+        t: datetime
         for i, t in enumerate(resampled_ts):
-            t: datetime
             writer.writerow((t.strftime("%Y-%m-%d %H:%M:%S.%f"), *resampled_val[i]))
 
     print(f"written to inertial/{path.basename(tgt_file)}")
@@ -104,8 +104,8 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
         tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_ble.csv")
         with open(tgt_file, mode="w") as f:
             writer = csv.writer(f)
+            t: datetime
             for i, t in enumerate(ble[0]):
-                t: datetime
                 writer.writerow((t.strftime("%Y-%m-%d %H:%M:%S.%f"), ble[1][i], ble[2][i]))
 
         print(f"written to ble/{path.basename(tgt_file)}")
