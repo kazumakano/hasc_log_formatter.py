@@ -15,6 +15,6 @@ python script/format_logs.py [--conf_file PATH_TO_CONF_FILE] [--src_file PATH_TO
 You can pull log files from your Android smartphone with this script.
 You can filter datetime of log files and specify directory to put them.
 Default directory is `raw/`.
-```ps
+```sh
 ./pull_logs -Date LOG_DATE [-Time LOG_TIME] [-Dir PATH_TO_DIR]
 ```
