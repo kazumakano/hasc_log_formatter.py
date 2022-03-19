@@ -11,10 +11,18 @@ Default source and target directory are `raw/` and `formatted/`.
 python script/format_logs.py [--conf_file PATH_TO_CONF_FILE] [--src_file PATH_TO_SRC_FILE] [--src_dir PATH_TO_SRC_DIR] [--tgt_dir PATH_TO_TGT_DIR]
 ```
 
-### pull_external_logs.ps1 pull_internal_logs.ps1
-You can pull log files from your Android smartphone with this script.
+### pull_external_logs.ps1
+You can pull log files from external storage of your Android smartphone with this script.
 You can filter datetime of log files and specify directory to put them.
 Default directory is `raw/`.
 ```sh
-.\\pull_external_logs.ps1 -Date LOG_DATE [-Time LOG_TIME] [-Dir PATH_TO_DIR]
+.\pull_external_logs.ps1 -Date LOG_DATE [-Time LOG_TIME] [-Dir PATH_TO_DIR]
+```
+
+### pull_internal_logs.ps1
+You can pull log files from internal storage of your Android smartphone with this script.
+You can filter datetime of log files and specify directory to put them.
+Default directory is `raw/`.
+```sh
+.\pull_internal_logs.ps1 -Date LOG_DATE [-Time LOG_TIME] [-Dir PATH_TO_DIR]
 ```
