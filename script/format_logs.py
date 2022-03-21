@@ -1,16 +1,17 @@
+from __future__ import annotations
 import csv
 import os.path as path
 import pickle
 from datetime import datetime
 from glob import iglob
 from os import mkdir
-from typing import Any, Union
+from typing import Any, Optional
 import numpy as np
 import yaml
 from scipy.interpolate import interp1d
 
 
-def _set_params(conf_file: Union[str, None] = None) -> None:
+def _set_params(conf_file: str | None) -> None:
     global ROOT_DIR, INERTIAL_SENSORS, ENABLE_BLE, FREQ
 
     ROOT_DIR = path.join(path.dirname(__file__), "../")
@@ -120,7 +121,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
 
         print(f"written to ble/{path.basename(tgt_file)}")
 
-def format_logs(src_file: Union[str, None] = None, src_dir: Union[str, None] = None, tgt_dir: Union[str, None] = None) -> None:
+def format_logs(src_file: Optional[str] = None, src_dir: Optional[str] = None, tgt_dir: Optional[str] = None) -> None:
     if tgt_dir is None:
         tgt_dir = path.join(ROOT_DIR, "formatted/")    # save to default target directory
 
