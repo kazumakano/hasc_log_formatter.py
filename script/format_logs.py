@@ -38,6 +38,8 @@ def _load_log(file: str) -> tuple[np.ndarray, np.ndarray]:
     ble[1] = np.empty(0, dtype=str)           # MAC address
     ble[2] = np.empty(0, dtype=np.int8)       # RSSI (>= -128)
 
+    print(f"loading {path.basename(file)}")
+
     with open(file) as f:
         for row in csv.reader(f, delimiter="\t"):
             for i, s in enumerate(INERTIAL_SENSORS):
@@ -90,7 +92,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     dir = path.join(tgt_dir, "inertial/")
     if not path.exists(dir):
         mkdir(dir)
-    tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_inertial.csv")
+    tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_inertial_" + "".join(s[0].lower() for s in INERTIAL_SENSORS) + ".csv")
     with open(tgt_file, mode="w", newline="") as f:
         writer = csv.writer(f)
         t: datetime
