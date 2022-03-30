@@ -74,7 +74,7 @@ def _resample_inertial_log(data: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
     return resampled_ts, resampled_val
 
-def _convert_from_unix_to_datetime(ts: np.ndarray) -> np.ndarray:
+def _unix2datetime(ts: np.ndarray) -> np.ndarray:
     ts = ts.astype(object)    # enable to store datetime
 
     for i, t in enumerate(ts):
@@ -86,7 +86,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     inertial, ble = _load_log(src_file)
     
     resampled_ts, resampled_val = _resample_inertial_log(inertial)
-    resampled_ts = _convert_from_unix_to_datetime(resampled_ts)
+    resampled_ts = _unix2datetime(resampled_ts)
 
     # inertial
     dir = path.join(tgt_dir, "inertial/")
@@ -110,7 +110,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
 
     # ble
     if ENABLE_BLE:
-        ble[0] = _convert_from_unix_to_datetime(ble[0])
+        ble[0] = _unix2datetime(ble[0])
 
         dir = path.join(tgt_dir, "ble/")
         if not path.exists(dir):
