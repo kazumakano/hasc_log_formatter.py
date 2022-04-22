@@ -151,7 +151,7 @@ if __name__ == "__main__":
     parser.add_argument("--src_dir", help="specify source directory", metavar="PATH_TO_SRC_DIR")
     parser.add_argument("--tgt_dir", help="specify target directory", metavar="PATH_TO_TGT_DIR")
     args = parser.parse_args()
-    
+
     _set_params(args.conf_file)
 
     format_logs(args.src_file, args.src_dir, args.tgt_dir)
