@@ -92,7 +92,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     dir = path.join(tgt_dir, "inertial/")
     if not path.exists(dir):
         mkdir(dir)
-    inertial_tgt_file_name = path.basename(src_file)[:-4] + "_inertial_" + "".join(s[0].lower() for s in INERTIAL_SENSORS)
+    inertial_tgt_file_name = path.splitext(path.basename(src_file))[0] + "_inertial_".join(s[0].lower() for s in INERTIAL_SENSORS)
     tgt_file = path.join(dir, inertial_tgt_file_name + ".csv")
     with open(tgt_file, mode="w", newline="") as f:
         writer = csv.writer(f)
@@ -115,7 +115,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
         dir = path.join(tgt_dir, "ble/")
         if not path.exists(dir):
             mkdir(dir)
-        tgt_file = path.join(dir, path.basename(src_file)[:-4] + "_ble.csv")
+        tgt_file = path.join(dir, path.splitext(path.basename(src_file))[0] + "_ble.csv")
         with open(tgt_file, mode="w", newline="") as f:
             writer = csv.writer(f)
             t: datetime
