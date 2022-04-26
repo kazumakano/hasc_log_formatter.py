@@ -82,7 +82,7 @@ def _unix2datetime(ts: np.ndarray) -> np.ndarray:
 
     return ts.astype(datetime)
 
-def _format_log(src_file: str, tgt_dir: str) -> None:
+def _format_log(src_file: str, tgt_dir: str, label: Optional[str]) -> None:
     inertial, ble = _load_log(src_file)
     
     resampled_ts, resampled_val = _resample_inertial_log(inertial)
@@ -92,7 +92,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
     dir = path.join(tgt_dir, "inertial/")
     if not path.exists(dir):
         mkdir(dir)
-    inertial_tgt_file_name = path.splitext(path.basename(src_file))[0] + "_inertial_" + "".join(s[0].lower() for s in INERTIAL_SENSORS)
+    inertial_tgt_file_name = path.splitext(path.basename(src_file))[0] + "_inertial_" + "".join(s[0].lower() for s in INERTIAL_SENSORS) + ("" if label is None else "_" + label)
     tgt_file = path.join(dir, inertial_tgt_file_name + ".csv")
     with open(tgt_file, mode="w", newline="") as f:
         writer = csv.writer(f)
@@ -115,7 +115,7 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
         dir = path.join(tgt_dir, "ble/")
         if not path.exists(dir):
             mkdir(dir)
-        tgt_file = path.join(dir, path.splitext(path.basename(src_file))[0] + "_ble.csv")
+        tgt_file = path.join(dir, path.splitext(path.basename(src_file))[0] + "_ble" + ("" if label is None else "_" + label) + ".csv")
         with open(tgt_file, mode="w", newline="") as f:
             writer = csv.writer(f)
             t: datetime
@@ -124,20 +124,20 @@ def _format_log(src_file: str, tgt_dir: str) -> None:
 
         print(f"written to ble/{path.basename(tgt_file)}")
 
-def format_logs(src_file: Optional[str] = None, src_dir: Optional[str] = None, tgt_dir: Optional[str] = None) -> None:
+def format_logs(src_file: Optional[str] = None, src_dir: Optional[str] = None, tgt_dir: Optional[str] = None, label: Optional[str] = None) -> None:
     if tgt_dir is None:
         tgt_dir = path.join(ROOT_DIR, "formatted/")    # save to default target directory
 
     if src_file is None and src_dir is None:
         for src_file in iglob(path.join(ROOT_DIR, "raw/*.log")):    # loop for default source directory
-            _format_log(src_file, tgt_dir)
+            _format_log(src_file, tgt_dir, label)
 
     elif src_file is None:
         for src_file in iglob(path.join(src_dir, "*.log")):    # loop for specified source directory
-            _format_log(src_file, tgt_dir)
+            _format_log(src_file, tgt_dir, label)
 
     elif src_dir is None:
-        _format_log(src_file, tgt_dir)
+        _format_log(src_file, tgt_dir, label)
 
     else:
         raise Exception("'src_file' and 'src_dir' are specified at the same time")
@@ -150,8 +150,9 @@ if __name__ == "__main__":
     parser.add_argument("--src_file", help="specify source file", metavar="PATH_TO_SRC_FILE")
     parser.add_argument("--src_dir", help="specify source directory", metavar="PATH_TO_SRC_DIR")
     parser.add_argument("--tgt_dir", help="specify target directory", metavar="PATH_TO_TGT_DIR")
+    parser.add_argument("-l", "--label", help="specify label", metavar="LABEL")
     args = parser.parse_args()
 
     _set_params(args.conf_file)
 
-    format_logs(args.src_file, args.src_dir, args.tgt_dir)
+    format_logs(args.src_file, args.src_dir, args.tgt_dir, args.label)

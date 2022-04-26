@@ -7,8 +7,9 @@ You can run this formatter as following.
 You can specify config file, source file or directory and target directory with flags.
 `config/default.yaml` will be used if unspecified.
 Default source and target directory are `raw/` and `formatted/`.
+You can append label to target file name with `label` flag.
 ```sh
-python script/format_logs.py [--conf_file PATH_TO_CONF_FILE] [--src_file PATH_TO_SRC_FILE] [--src_dir PATH_TO_SRC_DIR] [--tgt_dir PATH_TO_TGT_DIR]
+python script/format_logs.py [--conf_file PATH_TO_CONF_FILE] [--src_file PATH_TO_SRC_FILE] [--src_dir PATH_TO_SRC_DIR] [--tgt_dir PATH_TO_TGT_DIR] [--label LABEL]
 ```
 
 ### list_logs.ps1
