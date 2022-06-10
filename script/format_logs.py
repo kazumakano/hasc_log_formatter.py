@@ -29,7 +29,7 @@ def _set_params(conf_file: str | None) -> None:
 def _load_log(file: str) -> tuple[np.ndarray, np.ndarray]:
     inertial = np.empty(len(INERTIAL_SENSORS), dtype=np.ndarray)
     for i, s in enumerate(INERTIAL_SENSORS):
-        if s in ("ACC", "GRAV", "GYRO"):
+        if s in ("ACC", "GRAV", "GYRO", "MAG"):
             inertial[i] = np.empty((0, 4), dtype=np.float64)    # (timestamp, x, y, z)
         elif s == "ROTV":
             inertial[i] = np.empty((0, 5), dtype=np.float64)    # (timestamp, x, y, z, scalar)
@@ -64,7 +64,7 @@ def _resample_inertial_log(data: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
     col_index = 0
     for sensor_index, s in enumerate(INERTIAL_SENSORS):
-        if s in ("ACC", "GRAV", "GYRO"):
+        if s in ("ACC", "GRAV", "GYRO", "MAG"):
             val_len = 3
         elif s == "ROTV":
             val_len = 4
