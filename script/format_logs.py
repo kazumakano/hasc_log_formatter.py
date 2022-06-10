@@ -44,8 +44,7 @@ def _load_log(file: str) -> tuple[np.ndarray, np.ndarray]:
         for row in csv.reader(f, delimiter="\t"):
             for i, s in enumerate(INERTIAL_SENSORS):
                 if s == row[1]:
-                    row_2 = row[2].split(",")[1:]
-                    inertial[i] = np.vstack((inertial[i], (np.float64(row[0]), *[np.float64(v) for v in row_2])))
+                    inertial[i] = np.vstack((inertial[i], (np.float64(row[0]), *[np.float64(v) for v in row[2].split(",")[1:]])))
                     break
 
             if ENABLE_BLE and row[1] == "BLE":
