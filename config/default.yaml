@@ -1,3 +1,4 @@
 enable_ble: True
+enable_wifi: True
 freq: 100
 inertial_sensors: [ACC, GYRO]
