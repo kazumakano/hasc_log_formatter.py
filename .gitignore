@@ -1,3 +1,6 @@
+*.csv
+*.log
+*.pkl
 config/*
 !config/README.md
 formatted/ble/
