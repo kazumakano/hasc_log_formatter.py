@@ -5,4 +5,5 @@ config/*
 !config/README.md
 formatted/ble/
 formatted/inertial/
+formatted/wifi/
 raw/
