@@ -127,7 +127,7 @@ def _format_log(src_file: str, tgt_dir: str, label: Optional[str]) -> None:
     if ENABLE_BLE:
         ble[0] = _unix2datetime(ble[0])
 
-        dir = path.join(tgt_dir, "radio/")
+        dir = path.join(tgt_dir, "ble/")
         if not path.exists(dir):
             mkdir(dir)
         tgt_file_name = path.splitext(path.basename(src_file))[0] + "_ble" + ("" if label is None else "_" + label)
@@ -138,18 +138,18 @@ def _format_log(src_file: str, tgt_dir: str, label: Optional[str]) -> None:
             for i, t in enumerate(ble[0]):
                 writer.writerow((t.strftime("%Y-%m-%d %H:%M:%S.%f"), ble[1][i], ble[2][i]))
 
-        print(f"written to radio/{tgt_file_name}.csv")
+        print(f"written to ble/{tgt_file_name}.csv")
 
         tgt_file = path.join(dir, tgt_file_name + ".pkl")
         with open(tgt_file, mode="wb") as f:
             pickle.dump(ble, f)
 
-        print(f"written to radio/{tgt_file_name}.pkl")
+        print(f"written to ble/{tgt_file_name}.pkl")
 
     if ENABLE_WIFI:
         wifi[0] = _unix2datetime(wifi[0])
 
-        dir = path.join(tgt_dir, "radio/")
+        dir = path.join(tgt_dir, "wifi/")
         if not path.exists(dir):
             mkdir(dir)
         tgt_file_name = path.splitext(path.basename(src_file))[0] + "_wifi" + ("" if label is None else "_" + label)
@@ -160,13 +160,13 @@ def _format_log(src_file: str, tgt_dir: str, label: Optional[str]) -> None:
             for i, t in enumerate(wifi[0]):
                 writer.writerow((t.strftime("%Y-%m-%d %H:%M:%S.%f"), wifi[1][i], wifi[2][i]))
 
-        print(f"written to radio/{tgt_file_name}.csv")
+        print(f"written to wifi/{tgt_file_name}.csv")
 
         tgt_file = path.join(dir, tgt_file_name + ".pkl")
         with open(tgt_file, mode="wb") as f:
             pickle.dump(wifi, f)
 
-        print(f"written to radio/{tgt_file_name}.pkl")
+        print(f"written to wifi/{tgt_file_name}.pkl")
 
 def format_logs(src_file: Optional[str] = None, src_dir: Optional[str] = None, tgt_dir: Optional[str] = None, label: Optional[str] = None) -> None:
     if tgt_dir is None:
