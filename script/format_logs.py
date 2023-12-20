@@ -107,7 +107,7 @@ def _format_log(src_file: str, tgt_dir: str, label: Optional[str]) -> None:
     dir = path.join(tgt_dir, "inertial/")
     if not path.exists(dir):
         mkdir(dir)
-    tgt_file_name = path.splitext(path.basename(src_file))[0] + "_inertial_" + "".join(s[0].lower() for s in INERTIAL_SENSORS) + ("" if label is None else "_" + label)
+    tgt_file_name = path.splitext(path.basename(src_file))[0] + ("" if label is None else "_" + label) + "_inertial_" + "".join(s[0].lower() for s in INERTIAL_SENSORS)
     tgt_file = path.join(dir, tgt_file_name + ".csv")
     with open(tgt_file, mode="w", newline="") as f:
         writer = csv.writer(f)
@@ -130,7 +130,7 @@ def _format_log(src_file: str, tgt_dir: str, label: Optional[str]) -> None:
         dir = path.join(tgt_dir, "ble/")
         if not path.exists(dir):
             mkdir(dir)
-        tgt_file_name = path.splitext(path.basename(src_file))[0] + "_ble" + ("" if label is None else "_" + label)
+        tgt_file_name = path.splitext(path.basename(src_file))[0] + ("" if label is None else "_" + label) + "_ble"
         tgt_file = path.join(dir, tgt_file_name + ".csv")
         with open(tgt_file, mode="w", newline="") as f:
             writer = csv.writer(f)
@@ -152,7 +152,7 @@ def _format_log(src_file: str, tgt_dir: str, label: Optional[str]) -> None:
         dir = path.join(tgt_dir, "wifi/")
         if not path.exists(dir):
             mkdir(dir)
-        tgt_file_name = path.splitext(path.basename(src_file))[0] + "_wifi" + ("" if label is None else "_" + label)
+        tgt_file_name = path.splitext(path.basename(src_file))[0] + ("" if label is None else "_" + label) + "_wifi"
         tgt_file = path.join(dir, tgt_file_name + ".csv")
         with open(tgt_file, mode="w", newline="") as f:
             writer = csv.writer(f)
