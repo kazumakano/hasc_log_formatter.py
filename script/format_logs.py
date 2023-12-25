@@ -75,13 +75,13 @@ def _load_log(file: str) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
 
 def _resample_inertial_log(data: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     resampled_ts = np.arange(max(d[0, 0] for d in data), min(d[-1, 0] for d in data), step=1/FREQ, dtype=np.float64)
-    resampled_val = np.empty((len(resampled_ts), 3 * len(INERTIAL_SENSORS) + INERTIAL_SENSORS.count("ROTV") + INERTIAL_SENSORS.count("GROTV")), dtype=np.float64)
+    resampled_val = np.empty((len(resampled_ts), 3 * len(INERTIAL_SENSORS) + INERTIAL_SENSORS.count("GROTV") + INERTIAL_SENSORS.count("ROTV")), dtype=np.float64)
 
     col_index = 0
     for sensor_index, s in enumerate(INERTIAL_SENSORS):
         if s in ("ACC", "GRAV", "GYRO", "MAG"):
             val_len = 3
-        elif s in ("ROTV", "GROTV"):
+        elif s in ("GROTV", "ROTV"):
             val_len = 4
         for i in range(val_len):
             resampled_val[:, col_index + i] = interp1d(data[sensor_index][:, 0], data[sensor_index][:, i + 1])(resampled_ts)
