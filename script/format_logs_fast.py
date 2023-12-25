@@ -118,14 +118,12 @@ def format_logs(conf_file: Optional[str] = None, src_file: Optional[str] = None,
         tgt_dir = path.join(path.dirname(__file__), "../formatted/")
 
     if src_file is None and src_dir is None:
-        joblib.Parallel(n_jobs=JOB_NUM)(
-            joblib.delayed(_format_log)(conf, f, tgt_dir, label) for f in iglob(path.join(path.dirname(__file__), "../raw/*.log"))
-        )
+        with joblib.Parallel(n_jobs=JOB_NUM) as p:
+            p(joblib.delayed(_format_log)(conf, f, tgt_dir, label) for f in iglob(path.join(path.dirname(__file__), "../raw/*.log")))
 
     elif src_file is None:
-        joblib.Parallel(n_jobs=JOB_NUM)(
-            joblib.delayed(_format_log)(conf, f, tgt_dir, label) for f in iglob(path.join(src_dir, "*.log"))
-        )
+        with joblib.Parallel(n_jobs=JOB_NUM) as p:
+            p(joblib.delayed(_format_log)(conf, f, tgt_dir, label) for f in iglob(path.join(src_dir, "*.log")))
 
     elif src_dir is None:
         _format_log(conf, src_file, tgt_dir, label)
